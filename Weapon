@@ -1,0 +1,77 @@
+
+package github;
+
+/**
+ * @author Hajdu Jani
+ */
+public class Weapon extends DamageDealer {
+    
+    private Gem ench;
+    
+    Weapon(String nev, int mind, int maxd, double crit){
+        super(nev);
+        this.minDam = mind;
+        this.maxDam = maxd;
+        this.critChance = crit;
+        this.ench = new Gem("default", 0, 0.0);
+    }
+    
+    @Override
+    public double getCritChance(){
+        return critChance + ench.getCrit();
+    }
+
+    @Override
+    public String getName(){
+        return name;
+    }
+
+    @Override
+    public int getMinDam(){
+        return (minDam + ench.getDam());
+    }
+    @Override
+    public int getMaxDam(){
+        return (maxDam + ench.getDam());
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    @Override
+    public int damage(){
+        return (int)Math.floor(Math.random()*(getMaxDam()-getMaxDam()+1)+getMinDam());
+    }
+    
+    /**
+     * 
+     * @param g
+     */
+    public void setGem(Gem g){
+        this.ench = g;
+    }
+    
+    public Gem getGem(){
+        return ench;
+    }
+    
+    @Override
+    public String toString(){
+        return name + "\n\t Damage: (" + this.getMinDam()
+                + " - " + this.getMaxDam() + ")" 
+                + "\n\t Crit chance: " + this.getCritChance();
+    }
+    
+    /**
+     * The toString version required to the enhancement process
+     * @param damMod
+     * @param critMod
+     * @return the modified statistics of the weapon,which we want to enhance
+     */
+    public String toString(int damMod, double critMod){
+        return name + "\n\t Damage: (" + (this.getMinDam() + damMod)
+                + " - " + (this.getMaxDam() + damMod) + ")"
+                + "\n\t Crit chance: " + (this.getCritChance() + critMod);
+    }
+}
