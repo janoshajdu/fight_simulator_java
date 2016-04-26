@@ -1,0 +1,40 @@
+
+package github;
+
+/**
+ * @author Hajdu Jani
+ */
+public class Position {
+    final private int x;
+    final private int y;
+    
+    public Position(){
+        x = (int)Math.floor(Math.random()*101);
+        y = (int)Math.floor(Math.random()*51);
+    }
+    
+    //theoritically, this constructor should never be used
+    public Position(String hiba){
+        x = -1;
+        y = -1;
+    }
+    //Position change is not yet implemented in the simulation
+//    public void setX(int arg){
+//        this.x = arg;
+//    }
+    public int getX(){
+        return x;
+    }
+    
+    //Position change is not yet implemented in the simulation
+//    public void setY(int arg){
+//        this.y = arg;
+//    }
+    public int getY(){
+        return y;
+    }
+    @Override
+    public String toString(){
+        return "Position: (" + x + ", " + y + ")\n";
+    }
+}
