@@ -1,0 +1,37 @@
+
+package github;
+
+/**
+ * @author Hajdu Jani
+ */
+public class Warrior extends Fighter{
+
+    /**
+     *
+     * @param n
+     * @param fegyv
+     */
+    public Warrior(String n, Weapon fegyv) {
+        super(n,fegyv);
+        this.minDam = (int)Math.floor(Math.random()*101+120);
+        this.maxDam = (int)Math.floor(Math.random()*101+230);
+        this.critChance = (int)Math.floor(Math.random()*11+10);
+        this.hp = (int)Math.floor(Math.random()*1001+4000);
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public int damage() {
+        int sebzes = (int)Math.floor(Math.random() * (getMaxDam() 
+                - getMinDam() + 1) + getMinDam())+fegyver.damage();
+        if(critChance + fegyver.getCritChance() > Math.random()*100){
+            return 2 * sebzes;
+        }else{
+            return sebzes;
+        }
+    }
+    
+}
