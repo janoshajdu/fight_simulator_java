@@ -22,6 +22,7 @@ the task(in hungarian,iwill translate it maybe somtimes):
  hp: int életerő (health point), ha 0-ra csökken, akkor a harcos meghal
  location:Point2D, nekünk kell megvalósítani
  Weapon: fegyver
+ 
  A Weapon osztály adattagjai:
  damageMin: min sebzés, damageMax: max sebzés
  criticalHitChance: kritikus sebzés esélye
