@@ -1,0 +1,45 @@
+
+package github;
+
+/**
+ *
+ * @author Hajdu Jani
+ */
+public class Rogue extends Fighter {
+    
+    /**
+     * The constructor creates initial values for minimal damage (80-160), 
+     * maximum damage (161-250), critical chance(20-30%), and health points (3500-4500)
+     * @param name the name of the rogue 
+     * @param fegyv the weapon, the rogue uses
+     */
+    public Rogue(String name, Weapon fegyv){
+        super(name, fegyv);
+        this.minDam = (int)Math.floor(Math.random()*81+80);
+        this.maxDam = (int)Math.floor(Math.random()*101+161);
+        this.critChance = (int)Math.floor(Math.random()*11+20);
+        this.hp = (int)Math.floor(Math.random()*1001+3500);
+    }
+    
+    /**
+     *
+     */
+    public Rogue(){
+        super();
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public int damage(){
+        int sebzes = (int)Math.floor(Math.random() * (getMaxDam() 
+                - getMinDam() + 1) + getMinDam())+fegyver.damage();
+        if(critChance + fegyver.getCritChance() > Math.random()*100){
+            return (int)2.5 * sebzes;
+        }else{
+            return sebzes;
+        }
+    }
+}
