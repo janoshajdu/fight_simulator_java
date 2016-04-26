@@ -1,0 +1,3 @@
+- accessibility modifiers check (it is working, but not optimal)
+- complete javadoc
+- hide simulation logic from main
