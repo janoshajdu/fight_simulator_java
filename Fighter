@@ -1,0 +1,51 @@
+
+package github;
+
+/**
+ * @author Hajdu Jani
+ */
+abstract class Fighter extends DamageDealer {
+    protected Weapon fegyver;
+    protected final Position POS;
+    protected int hp;
+    
+    Fighter(String n, Weapon fegyv){
+        super(n);
+        this.fegyver = fegyv;
+        this.POS = new Position();
+    }
+    
+    Fighter(){
+        super("Hiba!");
+        this.minDam = -1;
+        this.maxDam = -1;
+        this.fegyver = new Weapon("Hiba!", -1, -1, -1.0);
+        this.critChance = -1;
+        this.hp = -1;
+        this.POS = new Position("hiba");
+    }
+    public Weapon getWeapon(){
+        return fegyver;
+    }
+    public void setWeapon(Weapon arg){
+        this.fegyver = arg;
+    }
+    public int getHP(){
+        return hp<=0?0:hp;
+    }
+    public void loseHP(int arg){
+        this.hp = hp-arg;
+    }
+    public boolean isDead(){
+        return hp <= 0;
+    }
+    public Position getPosition(){
+            return POS;
+    }
+    @Override
+    public String toString(){
+        return "Nev: " + name + "\nKaszt: "+this.getClass().getSimpleName()+"\nHealth: " + (isDead()?"Dead":hp) +"\nFegyver: " 
+                + fegyver.toString() + "\nSebzes: (" + minDam +"-" 
+                + maxDam + ")\nCrit Chance: " + critChance + "\n" + POS.toString();
+    }
+}
