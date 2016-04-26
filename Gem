@@ -1,0 +1,39 @@
+
+package github;
+
+/**
+ * @author Hajdu Jani
+ */
+
+public class Gem {
+    private final String NAME; //name of the gem
+    private final int DAM; //damage increase property of the gem
+    private final double CRIT; //critical chance increase property of the gem
+    
+    /**
+     * @param nev initial name of the gem
+     * @param d initial damage modifier property of the gem
+     * @param cr initial critical chance modifier of the gem
+     * every parameter is contained in an array in main
+     */
+    public Gem(String nev, int d, double cr){
+        this.NAME = nev;
+        this.DAM = d;
+        this.CRIT = cr;
+    }
+    
+    public String getName(){
+        return NAME;
+    }
+    public int getDam(){
+        return DAM;
+    }
+    public double getCrit(){
+        return CRIT;
+    }
+    @Override
+    public String toString(){
+        return NAME + ", +" + DAM + " dmg, +" + CRIT + "% critical chance.";
+    }
+    
+}
