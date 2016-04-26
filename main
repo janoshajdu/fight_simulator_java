@@ -1,0 +1,69 @@
+
+package github;
+
+/**
+ * @author Hajdu Jani
+ */
+public class Github {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+        int N = GameEngine.getNumberOfParticipants();
+        Fighter[] harcosok = GameEngine.getParticipants(N);
+        GameEngine.participantsToConsole(N, harcosok);
+        
+        //simulation logic
+        int roundCounter = 0;
+        do{
+            ++roundCounter;
+            System.out.println("\n" + roundCounter + ". kör: ");
+            for(int i=0; i<N; ++i){
+                if(!harcosok[i].isDead()){    
+                    Fighter opponent = new Rogue();
+                    //the maximum distance is 111,8 so the initial value should be bigger than any possible real distance
+                    //(50*100 table size)
+                    double distance = 112.0;
+                    double currentDistance;
+                    for(int j=0; j<N; ++j){
+                        if(!harcosok[j].isDead() && j != i){
+                            currentDistance = Math.sqrt(Math.pow(harcosok[i].getPosition().getX()-
+                                    harcosok[j].getPosition().getX(), 2)+
+                                    Math.pow(harcosok[i].getPosition().getY()-
+                                    harcosok[j].getPosition().getY(), 2));
+                            if(currentDistance < distance){
+                                opponent = harcosok[j];
+                                distance = currentDistance;
+                            }                                                      
+                        }
+                    }
+                    GameEngine.fight(harcosok[i], opponent);
+                }
+            }
+            
+            //beginning the next round
+            if(!GameEngine.highLander(harcosok)){
+                System.out.println("Nyomja meg az Enter gombot a következő "
+                        + "kör kezdéséhez!");
+                System.console().readLine();
+            }
+                
+            
+        }while(!GameEngine.highLander(harcosok));
+        
+        //writing out the winner
+        Fighter winner = new Rogue();
+        for(Fighter harcos: harcosok)
+            if(!harcos.isDead())
+                winner = harcos;
+            
+        System.out.println("\nLejátszott körök száma:" + roundCounter +
+                            ".\nA győztes: \n" + winner.toString());
+        System.out.println("\nA befejezéshez nyomja meg az Enter billentyűt!");
+        System.console().readLine();
+    }
+}
+    
+
