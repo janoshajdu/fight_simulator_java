@@ -1,0 +1,137 @@
+
+package github;
+
+/**
+ * @author Hajdu Jani
+ */
+public class GameEngine {
+     
+    /**
+     * Enhancement was required in the task, but not in the game logic,
+     * so it is not included in the simulation
+     * @param harcos the fighter, whose weapon is going to get enhanced
+     * @param avGems the array, which contains the currently available gems.
+     * @return the gem which should be enhanced on the fighters weapon
+     */
+    static Gem Enhancement(Fighter harcos, Gem[] avGems){
+        System.out.println("Current weapon: ");
+        System.out.println(harcos.getWeapon().toString());
+        System.out.println("Select a gem to enchant: ");
+        // the for cycle writes the available gems to the console
+        for(int i = 0; i<avGems.length; i++){
+            System.out.println((i+1)+". " + avGems[i].toString());
+        }
+        System.out.println("Which gem do you choose: ");
+        int inf = Integer.parseInt(System.console().readLine());
+        System.out.println("Enhancement result: ");
+        System.out.println(harcos.getWeapon().toString(avGems[inf-1].getDam(), 
+                                                avGems[inf-1].getCrit()));
+        System.out.println("Would you like to apply?(y/n)");
+        String ans = System.console().readLine();
+        if(ans.equals("y")|| ans.equals("Y")){
+            return avGems[inf-1];
+        }else{
+            return harcos.getWeapon().getGem();
+        }
+        
+    }
+    /**
+     * 
+     */
+    static void fight(Fighter tamado, Fighter vedekezo){
+        int currDam = tamado.damage();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            
+        }
+        System.out.println(tamado.getName() + " megtámadja " + 
+                        vedekezo.getName() + "t(hp: "+ vedekezo.getHP() +
+                        "). \nSebzés: " + currDam + "."); 
+        vedekezo.loseHP(currDam);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            
+        }
+        System.out.println("Maradék élet: " + vedekezo.getHP()+ ".\n");
+        
+    }
+    /**
+     * 
+     */
+    static boolean highLander(Fighter[] harcosok){
+        int counter = 0;
+        for(Fighter harcos : harcosok){
+            if(!harcos.isDead())
+                ++counter;
+        }
+        return counter == 1 ;
+    }
+    /**
+     * 
+     */
+    static int getNumberOfParticipants(){
+        int c;
+        while (true) {
+            System.out.println("Játékban résztvevő harcosok száma: ");
+            try {
+                c = Integer.parseInt(System.console().readLine());
+                if(c>=2)
+                    break;
+                else{
+                    clearConsole();
+                    System.out.println("Legalább 2 résztvevőnek kell lennie!");
+                }
+            } catch (NumberFormatException ignore) {
+                clearConsole();
+                System.out.println("Invalid input");
+            }
+        }
+        return c;
+    }
+    
+    /**
+     * 
+     */
+    static Fighter[] getParticipants(int N){
+        Weapon[] fegyverek = {new Weapon("Mjölnir", 250, 350, 7.2), 
+                              new Weapon("Damoklesz kardja", 180, 230, 13.1),
+                              new Weapon("Gábor Áron rézágyúja",280,380, 2.8),
+                              new Weapon("Gungnir",230,305,8.1),
+                              new Weapon("Zeusz villáma",300,330,6.2),
+                              new Weapon("Frostmourn",220,250,9.5)};
+        Fighter[] harcosok = new Fighter[N];
+        for(int i = 0; i<N; ++i){
+            System.out.println("Kérem adja meg az " + (i+1) + ". harcos nevét: ");            
+            String nev = System.console().readLine();
+            int cast;
+            do{
+                System.out.print("Kérem válasszon kasztot:\n-Rogue: 1\n-Warrior: 2\n");
+                cast = Integer.parseInt(System.console().readLine());
+            }while(cast!=1 && cast != 2);
+            
+            harcosok[i] = cast==1?new Rogue(nev, 
+                                    fegyverek[(int)Math.floor(Math.random()*6)])
+                                :new Warrior(nev,fegyverek[(int)Math.floor(Math.random()*6)] );           
+        }
+        return harcosok;
+    }
+    
+    /**
+     * 
+     */
+    static void participantsToConsole(int N, Fighter[] harcosok){
+        System.out.println("A deathmatch résztvevői: \n");
+        for(int i=0; i<N; ++i){
+            System.out.println((i+1) + ".)\n" + harcosok[i].toString());
+        }
+    }
+    
+    /**
+     * 
+     */
+    public static void clearConsole(){
+        System.out.print("\033[H\033[2J");
+    }
+}
